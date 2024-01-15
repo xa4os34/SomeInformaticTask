@@ -1,0 +1,49 @@
+<h4 class="fw-bold mb-4">Информация о запросе на ремонт</h4>
+<h5 class="fw-bold mb-3">Общаяя информация: </h5>
+<div class="row">
+  <div class="col">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Приоритет запроса: </span>
+      {{input type="text" class="form-control" value=model.request.priority}}
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Статус запроса: </span>
+      {{input type="text" class="form-control" value=model.request.status}}
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Клиент: </span>
+      {{#x-select class="form-select" value=model.request.userId on-change=(route-action "updateUserId" model.request) as |xs|}}
+      {{#each model.users as |user|}}
+      {{#xs.option value=user.id}}{{user.name}}{{/xs.option}}
+      {{/each}}
+      {{/x-select}}
+    </div>
+  </div>
+  <div class="col">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Описание Проблемы: </span>
+      {{textarea type="text" class="form-control" value=model.request.problemDescription}}
+    </div>
+  </div>
+</div>
+<h5 class="fw-bold mb-3 mt-1">Информация об устройстве: </h5>
+<div class="row edit-area">
+  <div class="col">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Тип: </span>
+      {{input type="text" class="form-control" value=model.request.device.type}}
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Модель: </span>
+      {{input type="text" class="form-control" value=model.request.device.model}}
+    </div>
+  </div>
+  <div class="col">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Серийный номер: </span>
+      {{input type="text" class="form-control" value=model.request.device.serialNumber}}
+    </div>
+  </div>
+</div>
+<button class="btn btn-success me-2" {{action 'createRequest' model.request}}>Создать</button>
+<button class="btn btn-edit btn-danger" {{action 'cancleCreation'}}>Отменить</button>

@@ -1,0 +1,126 @@
+<h4 class="fw-bold mb-4">Информация о запросе на ремонт</h4>
+<h5 class="fw-bold mb-3">Общаяя информация: </h5>
+<div class="edit-area">
+  <div class="row">
+    <div class="col">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Дата создания запроса: </span>
+        {{input readonly="true" type="date" class="form-control" value=model.request.createdAt}}
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Приоритет запроса: </span>
+        {{input readonly="true" type="text" class="form-control" value=model.request.priority}}
+      </div>
+    </div>
+    <div class="col">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Описание Проблемы: </span>
+        {{textarea readonly="true" type="text" class="form-control" value=model.request.problemDescription}}
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-edit btn-warning">Редактировать</button>
+  <button hidden class="btn btn-confirm btn-edit btn-success">Сохранить</button>
+</div>
+<h5 class="fw-bold mb-3 mt-1">Информация об устройстве: </h5>
+<div class="edit-area">
+  <div class="row edit-area">
+    <div class="col">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Тип: </span>
+        {{input readonly="true" type="text" class="form-control" value=model.request.device.type}}
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Модель: </span>
+        {{input readonly="true" type="text" class="form-control" value=model.request.device.model}}
+      </div>
+    </div>
+    <div class="col">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Серийный номер: </span>
+        {{input readonly="true" type="text" class="form-control" value=model.request.device.serialNumber}}
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-edit btn-warning">Редактировать</button>
+  <button hidden class="btn btn-confirm btn-edit btn-success">Сохранить</button>
+</div>
+<h5 class="fw-bold mb-3 mt-1">Информация о клиенте: </h5>
+<div class="row edit-area">
+  <div class="col">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Имя: </span>
+      {{input readonly="true" type="text" class="form-control" value=model.request.user.name}}
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Номер телефона: </span>
+      {{input readonly="true" type="text" class="form-control" value=model.request.user.phone}}
+    </div>
+  </div>
+  <div class="col">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Электронная почта: </span>
+      {{input readonly="true" type="text" class="form-control" value=model.request.user.email}}
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Место проживания: </span>
+      {{input readonly="true" type="text" class="form-control" value=model.request.user.location}}
+    </div>
+  </div>
+</div>
+<h5 class="fw-bold mb-3 mt-1">Информация о ремонте</h5>
+{{#if model.isHasRepairRecord}}
+<div class="row">
+  <div class="col">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Исполнитель ремонта: </span>
+      {{input readonly="true" type="text" class="form-control" value=model.repairRecord.employee.name}}
+    </div>
+  </div>
+  <div class="col">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Дата завершения ремонта: </span>
+      {{input readonly="true" type="date" class="form-control" value=model.repairRecord.completionDate}}
+    </div>
+  </div>
+</div>
+{{else}}
+<div id="accept-request">
+  <p class="fs-5">Этот запрос еще не принят</p>
+  <button class="btn btn-success" onClick=startAccept()>Принять запрос</button>
+</div>
+<div style="display: none;" id="accept-form">
+<div class="row">
+  <div class="col">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Исполнитель ремонта: </span>
+        {{#x-select class="form-select" value=repairRecord.employee.id on-change=(route-action "updateEmployeeId" model.repairRecord) as |xs|}}
+        {{#each model.employees as |employee|}}
+        {{#xs.option value=employee.id}}{{employee.name}}{{/xs.option}}
+        {{/each}}
+        {{/x-select}}
+    </div>
+  </div>
+  <div class="col">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Дата завершения ремонта: </span>
+      {{input type="date" class="form-control" value=model.repairRecord.compeletionDate}}
+    </div>
+  </div>
+</div>
+<button class="btn btn-success" {{action 'createRepairRecord' model.repairRecord}}>Добавить данные</button>
+  <button class="btn btn-danger" onClick=cancleAcception()>Отменить действие</button>
+</div>
+{{/if}}
+<script>
+function startAccept()
+{
+  $("#accept-request").hide();
+  $("#accept-form").show();
+}
+function cancleAcception()
+{
+  $("#accept-form").hide();
+  $("#accept-request").show();
+}
+</script>

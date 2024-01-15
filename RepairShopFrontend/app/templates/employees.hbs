@@ -1,0 +1,36 @@
+<h4>Список Сотрудников</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Имя</th>
+      <th>Должность</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each model as |employee index|}}
+    <tr class="edit-area">
+      <td>{{index}}</td>
+      <td>
+        {{input class="form-control-plaintext" readonly="" type="text" value=employee.name}}
+      </td>
+      <td>
+        {{input class="form-control-plaintext" readonly="" type="text" value=employee.post}}
+      </td>
+      <td>
+        <button class="btn btn-edit btn-sm btn-outline-secondary ms-2">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+        <button hidden class="btn btn-confirm btn-sm btn-outline-success ms-2" {{action 'editEmployee' employee}}>
+          <i class="bi bi-check-square"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger ms-2" {{action 'deleteEmployee' employee.id}}>
+          <i class="bi bi-trash bi-exclamation-triangle-fill"></i>
+        </button>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button class="btn btn-primary" {{action 'createEmployee'}}>Добавить Сотрудника</button>

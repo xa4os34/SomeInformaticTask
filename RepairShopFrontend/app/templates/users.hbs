@@ -1,0 +1,48 @@
+<h4>Список Клиентов</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Имя</th>
+      <th>Почты</th>
+      <th>Телефон</th>
+      <th>Локация</th>
+      <th>Дата регистрации</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each model as |user index|}}
+    <tr class="edit-area">
+      <td>{{index}}</td>
+      <td>
+        {{input class="form-control-plaintext" readonly="" type="text" value=user.name}}
+      </td>
+      <td>
+        {{input class="form-control-plaintext" readonly="" type="email" value=user.email}}
+      </td>
+      <td>
+        {{input class="form-control-plaintext" readonly="" type="phone" value=user.phone}}
+      </td>
+      <td>
+        {{input class="form-control-plaintext" readonly="" type="text" value=user.location}}
+      </td>
+      <td>
+        {{user.registrationDate}}
+      </td>
+      <td>
+        <button class="btn btn-edit btn-sm btn-outline-secondary ms-2">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+        <button hidden class="btn btn-confirm btn-sm btn-outline-success ms-2" {{action 'editUser' user}}>
+          <i class="bi bi-check-square"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger ms-2" {{action 'deleteUser' user.id}}>
+          <i class="bi bi-trash bi-exclamation-triangle-fill"></i>
+        </button>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button class="btn btn-primary" {{action 'createUser'}}>Добавить Клиента</button>

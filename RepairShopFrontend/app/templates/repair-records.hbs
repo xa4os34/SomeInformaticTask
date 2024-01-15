@@ -1,0 +1,54 @@
+<h4>Информация О Процессе Работы</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Устроиство</th>
+      <th>Статус</th>
+      <th>Имя Сотрудника</th>
+      <th>Дата Окончания Ремонта</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each model.repairRecords as |repairRecord index|}}
+    <tr class="edit-area">
+      <td>{{index}}</td>
+      <td>
+        <span class="text-center text-wrap">
+          {{repairRecord.device.type}}: {{repairRecord.device.model}}
+        </span>
+      </td>
+      <td>
+        <span class="text-center text-wrap">
+          {{repairRecord.request.status}}
+        </span>
+      </td>
+      <td>
+        {{#x-select disabled=true class="form-select" value=repairRecord.employee.id on-change=(route-action "updateEmployee" repairRecord) as |xs|}}
+        {{#each model.employees as |employee|}}
+        {{#xs.option value=employee.id}}{{employee.name}}{{/xs.option}}
+        {{/each}}
+        {{/x-select}}
+      </td>
+      <td>
+        {{input class="form-control-plaintext" readonly="" type="date" value=repairRecord.completionDate}}
+      </td>
+      <td>
+        <button class="btn btn-edit btn-sm btn-outline-secondary ms-2">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+        <button hidden class="btn btn-confirm btn-sm btn-outline-success ms-2" {{action 'editRepairRecord' repairRecord}}>
+          <i class="bi bi-check-square"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-primary ms-2" {{action "toRequestDetails" repairRecord.request.id}}>
+          <i class="bi bi-info-square"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger ms-2" {{action "deleteRepairRecord" repairRecord.request.id}}>
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

@@ -1,0 +1,45 @@
+<h4>Список Запросов На Ремонт</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Имя Клиента</th>
+      <th>Описание Проблемы</th>
+      <th>Приоритет</th>
+      <th>Телефон</th>
+      <th>Дата Создания Запроса</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each model as |request index|}}
+    <tr class="edit-area">
+      <td>{{index}}</td>
+      <td>
+        {{request.user.name}}
+      </td>
+      <td>
+        {{request.problemDescription}}
+      </td>
+      <td>
+        {{request.priority}}
+      </td>
+      <td>
+        {{request.device.type}}: {{request.device.model}}
+      </td>
+      <td>
+        {{request.createdAt}}
+      </td>
+      <td>
+        <button class="btn btn-sm btn-outline-primary ms-2" {{action "toRequestDetails" request.id}}>
+          <i class="bi bi-info-square"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger ms-2" {{action 'deleteRequest' request.id}}>
+          <i class="bi bi-trash bi-exclamation-triangle-fill"></i>
+        </button>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button class="btn btn-primary" {{action 'createRequest'}}>Создать Запрос</button>
